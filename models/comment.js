@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
-class comment extends Model {}
+class Comment extends Model {}
 
-Gallery.init(
+Comment.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -11,15 +11,15 @@ Gallery.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    something: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    starting_date: {
+    something: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    ending_date: {
+    something: {
       type: DataTypes.DATE,
       allowNull: false,
     },
@@ -32,4 +32,4 @@ Gallery.init(
   }
 );
 
-module.exports = Gallery;
+module.exports = Comment;
