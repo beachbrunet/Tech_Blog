@@ -1,0 +1,26 @@
+{
+  "name": "tech_blog",
+  "version": "1.0.0",
+  "description": "Homework",
+  "main": "server.js",
+  "scripts": {
+    "test": "server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beachbrunet/Tech_Blog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beachbrunet/Tech_Blog/issues"
+  },
+  "homepage": "https://github.com/beachbrunet/Tech_Blog#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "dotenv": "^10.0.0",
+    "express-handlebars": "^5.3.4",
+    "mysql2": "^2.3.0"
+  }
+}
