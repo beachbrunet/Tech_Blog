@@ -1,8 +1,6 @@
 :root {
-  --bright: #40eff7;
-  --dark: #3589fc;
-  --light: #35fc96;
-  --white: white;
-  --black: black;
-  --button: #1bbc9b;
+  --white: #fff;
+  --fadeBlue: #3931af, black;
+  --gray: #495057; /* not used */
+  --blue: #0062cc; /* not used */
 }
