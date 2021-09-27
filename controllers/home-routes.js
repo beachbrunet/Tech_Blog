@@ -2,11 +2,12 @@ const router = require("express").Router();
 // User, Post, Comment
 const { User, Post, Comment } = require("../models");
 const bcrypt = require("bcrypt");
+const { request, response } = require('express');
 
 //Base code
 router.get("/", async (req, res) => {
   try {
-    const dbGalleryData = await Gallery.findAll({
+    const  = await Post.findAll({
       include: [
         {
           model: Painting,
@@ -28,3 +29,20 @@ router.get("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
+// comments
+
+// login, should redirect if already logged in
+
+// sign up
+router.get('signup', async (request, response) => {
+  try {
+      response.render('signup', { logged_in: request.session.logged_in })
+  } catch (err) {
+      console.log(err);
+      response.status(500).json(err);
+  }
+})
+
+module.export = router;
