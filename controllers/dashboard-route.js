@@ -40,87 +40,77 @@ router.get("/edit", withAuth, (req, res) => {
   Post.find({
     where: { user_id: req.session.user_id },
     attributes: ["id", "title", "created_at", "post_content"],
-     include: [
+    include: [
       {
-         model: Comment,
+        model: Comment,
         attributes: [
           ["id", "post_id", "user_id", "created_at", "post_content"],
-         ],
-         inlcude: {
+        ],
+        inlcude: {
           model: User,
-           attributes: ["username"],
-           // would like to add a socialmedia attribute as a future feature.
-         },
-       },
+          attributes: ["username"],
+          // would like to add a socialmedia attribute as a future feature.
+        },
+      },
     ],
-   })
-    
-  .then((dbPostData) => {
-    if (!dbPostData) {
-      res.statis(404).json("Not Found");
-      return;
-    }
-
-    // serialize data to be stored
-    const post = dbPostData.get({ plain: true });
-    //
-    res.render("Dashboard", {
-      posts,
-      loggedIn: true
-    });
   })
-  .catch((err) => {
-    console.log(err);
-    res.status(500).json(err);
-  });
+    .then((dbPostData) => {
+      if (!dbPostData) {
+        res.status(404).json("Not Found");
+        return;
+      }
+
+      // serialize data to be stored
+      const post = dbPostData.get({ plain: true });
+      res.render("Dashboard", {
+        posts,
+        loggedIn: true,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 // create
-router.get("/edit", withAuth, (req, res) => {
-    Post.find({
-      where: { user_id: req.session.user_id },
-      attributes: ["id", "title", "created_at", "post_content"],
-      include: [
-        {
-          model: Comment,
-          attributes: [
-            ["id", "post_id", "user_id", "created_at", "post_content"],
-          ],
-          inlcude: {
-            model: User,
-            attributes: ["username"],
-            // would like to add a socialmedia attribute as a future feature.
-          },
+router.get("/create", withAuth, (req, res) => {
+  Post.findAll({
+    where: { user_id: req.session.user_id },
+    attributes: ["id", "title", "created_at", "post_content"],
+    include: [
+      {
+        model: Comment,
+        attributes: [
+          ["id", "post_id", "user_id", "created_at", "post_content"],
+        ],
+        inlcude: {
+          model: User,
+          attributes: ["username"],
+          // would like to add a socialmedia attribute as a future feature.
         },
-      ],
-    })
-    
-  .then((dbPostData) => {
-    if (!dbPostData) {
-      res.statis(404).json("Not Found");
-      return;
-    }
-
-    // serialize data to be stored
-    const post = dbPostData.get({ plain: true });
-    //
-    res.render("Dashboard", {
-      posts,
-      loggedIn: true
-    });
+      },
+    ],
   })
-  .catch((err) => {
-    console.log(err);
-    res.status(500).json(err);
-  });
 
+    .then((dbPostData) => {
+      if (!dbPostData) {
+        res.status(404).json("Not Found");
+        return;
+      }
 
-
-
-
-
-
-
-
-
+      // serialize data to be stored
+      const post = dbPostData.get({ plain: true });
+      //
+      res.render("Dashboard", {
+        posts,
+        loggedIn: true,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 module.export = router;
