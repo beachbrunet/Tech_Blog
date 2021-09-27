@@ -1,14 +1,40 @@
-// Importing models
-const Comment = require("./aComment");
-const Post = require("./Post");
+// Importing models User, Post, Comment
 const User = require("./User");
+const Post = require("./Post");
+const Comment = require("./aComment");
 
-Gallery.hasMany(Painting, {
-  foreignKey: "gallery_id",
+// outline example code
+// Gallery.hasMany(Painting, {
+//   foreignKey: "gallery_id",
+// });
+
+// Painting.belongsTo(Gallery, {
+//   foreignKey: "gallery_id",
+// });
+
+// needs a post and comment
+User.hasMany(Post, {
+  foreignKey: "User_id",
 });
 
-Painting.belongsTo(Gallery, {
-  foreignKey: "gallery_id",
+User.hasMany(Comment, {
+  foreignKey: "User_id",
 });
 
-module.exports = { User, Gallery, Painting };
+Post.hasMany(Comment, {
+  foreignKey: "Post_id",
+});
+
+Post.belongsTo(Post, {
+  foreignKey: "User_id",
+});
+
+Comment.belongsTo(User, {
+  foreignKey: "User_id",
+});
+
+Comment.belongsTo(Post, {
+  foreignKey: "Post_id",
+});
+
+module.exports = { User, Post, Comment };
