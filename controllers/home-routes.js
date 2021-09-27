@@ -35,19 +35,34 @@ const bcrypt = require("bcrypt");
 //   }
 // });
 
-// Starting here
+// Starting here --- techBlog_db
 router.get("/", (req, res) => {
   console.log(req.session);
-  Post.FindAll({
+  Post.findAll({
     // per told via TA
     attributes: ["id", "title", "created_at", "post_content"],
     include: [
       {
         model: Comment,
         attributes: [["id", "title", "created_at", "post_content"]],
+        inlcude: { model: User, attributes: ["username, socialmedia"] },
       },
     ],
   });
+.then((data) => {
+  if (!data) {
+    res.status(404).json("Not Available");
+    return;
+  }
+  const post = data.map((post => post.get))
+  }
+}
+
+// example code
+// const galleries = dbGalleryData.map((gallery) =>
+//       gallery.get({ plain: true })
+
+
 });
 
 // This is signup example code
@@ -61,3 +76,14 @@ router.get("/", (req, res) => {
 // });
 
 module.export = router;
+
+// Pusedo Code
+// MVP
+// Has a homepage
+// links work and the navigation
+// sign in page
+// sign up page
+
+// Features
+// home page includes: existing blog posts if any have been posted;
+// navigation links for the homepage and the dashboard; and the option to log in
