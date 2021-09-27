@@ -1,6 +1,7 @@
 const router = require("express").Router();
 // User, Post, Comment
 const { User, Post, Comment } = require("../models");
+const bcrypt = require("bcrypt");
 
 //Base code
 router.get("/", async (req, res) => {
