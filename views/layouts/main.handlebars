@@ -1,5 +1,7 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,25 +12,30 @@
     {{!-- font from google font-family: 'Montserrat', sans-serif; --}}
     <title>Tech Blog</title>
 </head>
-<body>
-<header class = "placeholder">
-    <nav class = "nav">
-        <ul>
-            <li>
-                <a href="/">home</a>
-            </li>
-            <li>
-                <a href="/">home</a>
-            </li>
-            <li>
-                <a href="/">home</a>
-            </li>
-        </ul>
-    </nav>
-    </header>
+{{!-- Home Dahbaord Login and Logout from example photo--}}
+    <div class="homepage">
+
+      {{#if loggedIn}}
+    
+        <div class="jumbotron">
+          <div class="container position-relative">
+    
+            <div>
+              <h1 id="h1-homepage"> Welcome to the Tech Blog!</h1>
+            </div>
+              <nav class="homepage-nav">
+                  <a href="/"><button type="button" class="create-button">Home Page</button></a>
+
+                  <a href="/"><button type="button" class="create-button">Dashboard</button></a>
+
+                  <a href="/"><button type="button" class="create-button">Login</button></a>
+
+                  <a href="/"><button type="button" class="create-button">Logout</button></a>
+            </nav>
 <main>
 {{!-- HandleBars --}}
 </main>
 
 </body>
+
 </html>
