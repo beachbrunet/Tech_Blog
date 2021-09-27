@@ -1,69 +1,71 @@
-// User, Post, Comment
+// User, Post, Comment - variables and routes
 const router = require("express").Router();
 const { User, Post, Comment } = require("../models");
-const bcrypt = require("bcrypt");
-
-//Base code
-// router.get('/gallery/:id', async (req, res) => {
-//   // If the user is not logged in, redirect the user to the login page
-//   if (!req.session.loggedIn) {
-//     res.redirect('/login');
-//   } else {
-//     // If the user is logged in, allow them to view the gallery
-//     try {
-//       const dbGalleryData = await Gallery.findByPk(req.params.id, {
-//         include: [
-//           {
-//             model: Painting,
-//             attributes: [
-//               'id',
-//               'title',
-//               'artist',
-//               'exhibition_date',
-//               'filename',
-//               'description',
-//             ],
-//           },
-//         ],
-//       });
-//       const gallery = dbGalleryData.get({ plain: true });
-//       res.render('gallery', { gallery, loggedIn: req.session.loggedIn });
-//     } catch (err) {
-//       console.log(err);
-//       res.status(500).json(err);
-//     }
-//   }
-// });
+const sequelize = require("../config/connection");
 
 // Starting here --- techBlog_db
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   console.log(req.session);
+
   Post.findAll({
     // per told via TA
     attributes: ["id", "title", "created_at", "post_content"],
     include: [
       {
         model: Comment,
-        attributes: [["id", "title", "created_at", "post_content"]],
-        inlcude: { model: User, attributes: ["username, socialmedia"] },
+        attributes: [["id", "post_id", "created_at", "post_content"]],
+        inlcude: {
+          model: User,
+          attributes: ["username"],
+        },
+        // would like to add a socialmedia attribute as a future feature.
       },
     ],
-  });
-.then((data) => {
-  if (!data) {
-    res.status(404).json("Not Available");
+  })
+    .then((dbPostData) => {
+      const posts = dbPostData.map((post) => post.get({ plain: true }));
+      res.render("homepage", {
+        posts,
+        loggedIn: req.session.loggedIn,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+// login and signup
+router.get("/login", (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect("/");
     return;
   }
-  const post = data.map((post => post.get))
+  res.render("login");
+});
+
+router.get("/signup", (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect("/");
+    return;
   }
-}
+  res.render("signup");
+});
 
 // example code
 // const galleries = dbGalleryData.map((gallery) =>
-//       gallery.get({ plain: true })
+// gallery.get({ plain: true })
+// );
 
-
-});
+// res.render('homepage', {
+// galleries,
+// loggedIn: req.session.loggedIn,
+// });
+// } catch (err) {
+// console.log(err);
+// res.status(500).json(err);
+// }
+// });
 
 // This is signup example code
 // router.get("signup", async (request, response) => {
