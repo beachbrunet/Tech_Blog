@@ -1,32 +1,32 @@
 // User, Post, Comment - variables and routes
 const router = require("express").Router();
 const { User, Post, Comment } = require("../models");
-const sequelize = require("../config/connection");
+const withAuth = require("../utils/authentication");
 
-// copied from home-routes need to edit
-router.get("/", (req, res) => {
-  console.log(req.session);
-
+// copied from home-routes needs authentication, edit, and create
+router.get("/", withAuth, (req, res) => {
   Post.findAll({
-    // per told via TA
+    where: { user_id: req.session.user_id },
     attributes: ["id", "title", "created_at", "post_content"],
     include: [
       {
         model: Comment,
-        attributes: [["id", "post_id", "created_at", "post_content"]],
+        attributes: [
+          ["id", "post_id", "user_id", "created_at", "post_content"],
+        ],
         inlcude: {
           model: User,
           attributes: ["username"],
+          // would like to add a socialmedia attribute as a future feature.
         },
-        // would like to add a socialmedia attribute as a future feature.
       },
     ],
   })
     .then((dbPostData) => {
-      const posts = dbPostData.map((post) => post.get({ plain: true }));
-      res.render("homepage", {
-        posts,
-        loggedIn: req.session.loggedIn,
+      const post = dbPostData.map((post) => post.get({ plain: true }));
+      res.render("Dashboard", {
+        post,
+        loggedIn: true,
       });
     })
     .catch((err) => {
@@ -35,61 +35,92 @@ router.get("/", (req, res) => {
     });
 });
 
-// login and signup
-router.get("/login", (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect("/");
-    return;
-  }
-  res.render("login");
-});
-
-router.get("/signup", (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect("/");
-    return;
-  }
-  res.render("signup");
-});
-
-router.get("/post route", (req, res) => {
-  console.log(req.session);
-
-  Post.findOne({
-    where: {
-      id: req.params.id,
-    },
+// edit
+router.get("/edit", withAuth, (req, res) => {
+  Post.find({
+    where: { user_id: req.session.user_id },
     attributes: ["id", "title", "created_at", "post_content"],
-    include: [
+     include: [
       {
-        model: Comment,
-        attributes: [["id", "post_id", "created_at", "post_content"]],
-        inlcude: {
+         model: Comment,
+        attributes: [
+          ["id", "post_id", "user_id", "created_at", "post_content"],
+         ],
+         inlcude: {
           model: User,
-          attributes: ["username"],
-        },
-        // would like to add a socialmedia attribute as a future feature.
-      },
+           attributes: ["username"],
+           // would like to add a socialmedia attribute as a future feature.
+         },
+       },
     ],
-  })
-    .then((dbPostData) => {
-      if (!dbPostData) {
-        res.statis(404).json("Not Found");
-        return;
-      }
+   })
+    
+  .then((dbPostData) => {
+    if (!dbPostData) {
+      res.statis(404).json("Not Found");
+      return;
+    }
 
-      // serialize data to be stored
-      const posts = dbPostData.get({ plain: true });
-      //
-      res.render("homepage", {
-        posts,
-        loggedIn: req.session.loggedIn,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
+    // serialize data to be stored
+    const post = dbPostData.get({ plain: true });
+    //
+    res.render("Dashboard", {
+      posts,
+      loggedIn: true
     });
-});
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err);
+  });
+
+// create
+router.get("/edit", withAuth, (req, res) => {
+    Post.find({
+      where: { user_id: req.session.user_id },
+      attributes: ["id", "title", "created_at", "post_content"],
+      include: [
+        {
+          model: Comment,
+          attributes: [
+            ["id", "post_id", "user_id", "created_at", "post_content"],
+          ],
+          inlcude: {
+            model: User,
+            attributes: ["username"],
+            // would like to add a socialmedia attribute as a future feature.
+          },
+        },
+      ],
+    })
+    
+  .then((dbPostData) => {
+    if (!dbPostData) {
+      res.statis(404).json("Not Found");
+      return;
+    }
+
+    // serialize data to be stored
+    const post = dbPostData.get({ plain: true });
+    //
+    res.render("Dashboard", {
+      posts,
+      loggedIn: true
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err);
+  });
+
+
+
+
+
+
+
+
+
+
 
 module.export = router;
