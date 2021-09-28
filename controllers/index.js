@@ -5,7 +5,7 @@ const userRoutes = require("./home-route");
 const userRoutes = require("./dashboard-route");
 
 router.use("/api", apiRoutes);
-router.use("/", userRoutes);
+router.use("/", homeRoutes);
 router.use("/dashboard", dashboardRoutes);
 
 // added error
