@@ -51,10 +51,14 @@ router.delete('/', withAuth, (req, res) => {
             if (!dbCommentData) {
             res
               .status(400)
-              .json({ message: "Incorrect email or password. Please try again!" });
+              .json({ message: "Not found" });
             return;
           }
-
-
-
+            res.json(dbCommentData);
         })
+        .catch((err) => {
+            console.log(err);
+            res.status(500).json(err);
+          });
+        })
+        module.exports = router;
