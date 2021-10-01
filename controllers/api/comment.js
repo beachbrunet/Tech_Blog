@@ -42,23 +42,22 @@ router.post("/", withAuth, (req, res) => {
 
 //     }
 // delete
-router.delete('/', withAuth, (req, res) => {
-    Comment.destroy({
-        where: {
-          id: req.params.id
-        })
-        .then(dbCommentData => {
-            if (!dbCommentData) {
-            res
-              .status(400)
-              .json({ message: "Not found" });
-            return;
-          }
-            res.json(dbCommentData);
-        })
-        .catch((err) => {
-            console.log(err);
-            res.status(500).json(err);
-          });
-        })
-        module.exports = router;
+router.delete("/", withAuth, (req, res) => {
+  Comment.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((dbCommentData) => {
+      if (!dbCommentData) {
+        res.status(400).json({ message: "Not found" });
+        return;
+      }
+      res.json(dbCommentData);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+module.exports = router;
