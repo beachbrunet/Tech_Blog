@@ -6,7 +6,7 @@ const withAuth = require("../utils/authentication");
 // get
 router.get("/", (req, res) => {
   Comment.findAll({})
-    .then((db) => res.json(db))
+    .then((dbCommentData) => res.json(dbCommentData))
     .catch((err) => {
       console.log(err);
       res.status(500).json(err);
@@ -23,7 +23,7 @@ router.post("/", withAuth, (req, res) => {
       // need user b/c we are using the id from the session
       user_id: req.session.user_id,
     })
-      .then((db) => res.json(db))
+      .then((dbCommentData) => res.json(dbCommentData))
       .catch((err) => {
         console.log(err);
         res.status(500).json(err);
@@ -42,3 +42,19 @@ router.post("/", withAuth, (req, res) => {
 
 //     }
 // delete
+router.delete('/', withAuth, (req, res) => {
+    Comment.destroy({
+        where: {
+          id: req.params.id
+        })
+        .then(dbCommentData => {
+            if (!dbCommentData) {
+            res
+              .status(400)
+              .json({ message: "Incorrect email or password. Please try again!" });
+            return;
+          }
+
+
+
+        })
