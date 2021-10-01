@@ -1,5 +1,7 @@
 # Tech Blog
 
+Tech Blog is a CMS style blog site to publish articles, blog posts, and a users thoughts and opinions.
+
 ## Requirements
 
 <!-- ----------------------- -->
@@ -62,34 +64,42 @@ THEN I am able to view comments but I am prompted to log in again before I can a
 
 ![Screen Shot]()
 
-## Resources
+## Resources and Dependancies
 
 <!-- ----------------------- -->
 
-[Express Handlebars](https://www.npmjs.com/package/express-handlebars),
-npm i express-handlebars
+- [Express Handlebars](https://www.npmjs.com/package/express-handlebars)<br />
+  comand-line: `npm i express-handlebars`
 
-[Node MySQL2](https://www.npmjs.com/package/mysql2),
-npm i mysql2
+- [Node MySQL2](https://www.npmjs.com/package/mysql2)<br />
+  comand-line: `npm i mysql2`
 
-[dotenv](https://www.npmjs.com/package/dotenv),
-npm i dotenv
+- [dotenv](https://www.npmjs.com/package/dotenv)<br />
+  comand-line: `npm i dotenv`
 
-[node.bcrypt.js](https://www.npmjs.com/package/bcrypt),
-npm i bcrypt
+- [node.bcrypt.js](https://www.npmjs.com/package/bcrypt)<br />
+  comand-line: `npm i bcrypt`
 
-[express-session](https://www.npmjs.com/package/express-session),
-npm i express-session
+- [express-session](https://www.npmjs.com/package/express-session)<br />
+  comand-line: `npm i express-session`
 
-[Connect Session Store using Sequelize](https://www.npmjs.com/package/connect-session-sequelize),
-npm i connect-session-sequelize
+- [Connect Session Store using Sequelize](https://www.npmjs.com/package/connect-session-sequelize)<br />
+  comand-line: `npm i connect-session-sequelize`
+
+## Helpful Links
 
 <!-- [Inquierer.js](https://www.npmjs.com/package/inquirer),
 npm i inquirer -->
 
-[MDN](),
+[MDN]()
 
-[w3Schools](),
+[w3Schools]()
+
+## Heroku
+
+<!-- ----------------------- -->
+
+[Heroku](https://something.herokuapp.com)
 
 ## Contributions and Contact Information
 

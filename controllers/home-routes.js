@@ -79,7 +79,7 @@ router.get("/post route", (req, res) => {
       }
 
       // serialize data to be stored
-      const posts = dbPostData.get({ plain: true });
+      const post = dbPostData.get({ plain: true });
       //
       res.render("homepage", {
         posts,
